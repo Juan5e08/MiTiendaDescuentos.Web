@@ -1,0 +1,119 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MiTiendaDescuentos.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MiTiendaDescuentos.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        @{
+            var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+            var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+        }
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <!-- Marca / título de la app -->
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                    MiTiendaDescuentos.Web
+                </a>
+
+                <!-- Botón hamburguesa en pantallas pequeñas -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="mainNavbar">
+                    <!-- Menú de la izquierda -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")"
+                               asp-area="" asp-controller="Home" asp-action="Index">
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(currentController == "Home" && currentAction == "Privacy" ? "active" : "")"
+                               asp-area="" asp-controller="Home" asp-action="Privacy">
+                                Privacy
+                            </a>
+                        </li>
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Instituciones" ? "active" : "")"
+                                   asp-area="" asp-controller="Instituciones" asp-action="Index">
+                                    Instituciones
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Sedes" ? "active" : "")"
+                                   asp-area="" asp-controller="Sedes" asp-action="Index">
+                                    Sedes
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Grados" ? "active" : "")"
+                                   asp-area="" asp-controller="Grados" asp-action="Index">
+                                    Grados
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Cupos" ? "active" : "")"
+                                   asp-area="" asp-controller="Cupos" asp-action="Index">
+                                    Cupos
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Citas" ? "active" : "")"
+                                   asp-area="" asp-controller="Citas" asp-action="Index">
+                                    Citas
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                    <!-- Menú derecha (login) -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <partial name="_LoginPartial" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - MiTiendaDescuentos.Web -
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

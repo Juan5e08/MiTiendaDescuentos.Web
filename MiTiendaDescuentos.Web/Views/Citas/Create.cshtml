@@ -1,0 +1,82 @@
+﻿@model MiTiendaDescuentos.Web.Models.Cita
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>Cita</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FechaCita" class="control-label"></label>
+                <input asp-for="FechaCita" class="form-control" />
+                <span asp-validation-for="FechaCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraCita" class="control-label"></label>
+                <input asp-for="HoraCita" class="form-control" />
+                <span asp-validation-for="HoraCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NombreAgenda" class="control-label"></label>
+                <input asp-for="NombreAgenda" class="form-control" />
+                <span asp-validation-for="NombreAgenda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CorreoAgenda" class="control-label"></label>
+                <input asp-for="CorreoAgenda" class="form-control" />
+                <span asp-validation-for="CorreoAgenda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TelefonoAgenda" class="control-label"></label>
+                <input asp-for="TelefonoAgenda" class="form-control" />
+                <span asp-validation-for="TelefonoAgenda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadCitas" class="control-label"></label>
+                <input asp-for="CantidadCitas" class="form-control" />
+                <span asp-validation-for="CantidadCitas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdColegio" class="control-label"></label>
+                <input asp-for="IdColegio" class="form-control" />
+                <span asp-validation-for="IdColegio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdSede" class="control-label"></label>
+                <input asp-for="IdSede" class="form-control" />
+                <span asp-validation-for="IdSede" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>
