@@ -1,69 +1,80 @@
 ﻿@model IEnumerable<MiTiendaDescuentos.Web.Models.Institucion>
 
+@{
+    ViewData["Title"] = "Instituciones";
+}
+
 <div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h2 class="mb-0">Instituciones</h2>
-            <a asp-action="Create" class="btn btn-primary btn-sm">
-                + Nueva institución
-            </a>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">Instituciones educativas</h2>
+            <small class="text-muted">Listado de colegios registrados en la base de datos <strong>colegios</strong>.</small>
         </div>
 
-        <div class="card-body">
-            @if (!Model.Any())
-            {
-                <p class="text-muted mb-0">
-                    No hay instituciones registradas aún.
-                </p>
-            }
-            else
-            {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nueva institución
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No hay instituciones registradas todavía.
+            <a asp-action="Create">Haz clic aquí para crear la primera.</a>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle mb-0">
+                    <table class="table table-striped table-hover mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>@Html.DisplayNameFor(model => model.Nombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.Localidad)</th>
-                                <th>@Html.DisplayNameFor(model => model.DireccionPrincipal)</th>
-                                <th>@Html.DisplayNameFor(model => model.Correo)</th>
-                                <th>@Html.DisplayNameFor(model => model.Telefono)</th>
-                                <th>@Html.DisplayNameFor(model => model.CantidadSedes)</th>
-                                <th class="text-end">Acciones</th>
+                                <th>#</th>
+                                <th>@Html.DisplayNameFor(m => m.First().Nombre)</th>
+                                <th>@Html.DisplayNameFor(m => m.First().Localidad)</th>
+                                <th>@Html.DisplayNameFor(m => m.First().DireccionPrincipal)</th>
+                                <th>@Html.DisplayNameFor(m => m.First().Correo)</th>
+                                <th class="text-end">@Html.DisplayNameFor(m => m.First().Telefono)</th>
+                                <th class="text-center">@Html.DisplayNameFor(m => m.First().CantidadSedes)</th>
+                                <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @{
+                                var i = 1;
+                            }
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Localidad)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.DireccionPrincipal)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Correo)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CantidadSedes)</td>
-                                    <td class="text-end">
-                                        <a asp-action="Edit"
-                                           asp-route-id="@item.IdColegio"
-                                           class="btn btn-sm btn-outline-secondary me-1">
-                                            Editar
-                                        </a>
-                                        <a asp-action="Details"
-                                           asp-route-id="@item.IdColegio"
-                                           class="btn btn-sm btn-outline-info me-1">
-                                            Detalles
-                                        </a>
-                                        <a asp-action="Delete"
-                                           asp-route-id="@item.IdColegio"
-                                           class="btn btn-sm btn-outline-danger">
-                                            Eliminar
-                                        </a>
+                                    <td>@i</td>
+                                    <td>@item.Nombre</td>
+                                    <td>@item.Localidad</td>
+                                    <td>@item.DireccionPrincipal</td>
+                                    <td>@item.Correo</td>
+                                    <td class="text-end">@item.Telefono</td>
+                                    <td class="text-center">@item.CantidadSedes</td>
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a asp-action="Details" asp-route-id="@item.IdColegio" class="btn btn-outline-secondary">
+                                                Detalles
+                                            </a>
+                                            <a asp-action="Edit" asp-route-id="@item.IdColegio" class="btn btn-outline-primary">
+                                                Editar
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.IdColegio" class="btn btn-outline-danger">
+                                                Eliminar
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
+                                i++;
                             }
                         </tbody>
                     </table>
                 </div>
-            }
+            </div>
         </div>
-    </div>
+    }
 </div>

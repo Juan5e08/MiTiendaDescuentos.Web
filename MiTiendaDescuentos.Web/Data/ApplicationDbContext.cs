@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using MiTiendaDescuentos.Web.Models;
 
-
 namespace MiTiendaDescuentos.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext
@@ -11,11 +10,12 @@ namespace MiTiendaDescuentos.Web.Data
             : base(options)
         {
         }
-        public DbSet<Institucion> Instituciones { get; set; }
-        public DbSet<Sede> Sede { get; set; }
-        public DbSet<Grado> Grado { get; set; }
-        public DbSet<Cupo> Cupo { get; set; }
-        public DbSet<Cita> Cita { get; set; }
 
+        // DbSets para las tablas de la BD "colegios"
+        public DbSet<Cita> Cita { get; set; }
+        public DbSet<Cupo> Cupo { get; set; }
+        public DbSet<Grado> Grado { get; set; }
+        public DbSet<Institucion> Instituciones { get; set; }   // <- IMPORTANTE
+        public DbSet<Sede> Sede { get; set; }
     }
 }
