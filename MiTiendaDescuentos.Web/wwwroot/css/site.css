@@ -1,22 +1,94 @@
+/* ----------- FONDO Y TIPOGRAFÍA ----------- */
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
     font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 0;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ----------- NAVBAR MEP ----------- */
+.navbar {
+    background-color: #004a8f !important; /* Azul MEP */
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+/* Título del navbar */
+.navbar-brand {
+    color: white !important;
+    font-weight: bold;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Subtítulo pequeño debajo del nombre */
+.navbar-subtitle {
+    display: block;
+    font-size: 0.70rem;
+    margin-left: 42px; /* alineado con logo */
+    margin-top: -8px;
+    color: #dce6f2;
+}
+
+/* Logo cuadrado azul claro */
+.logo-mep {
+    background-color: #1e90ff;
+    color: white;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+/* Items del menú */
+.navbar-nav .nav-link {
+    color: #dce6f2 !important;
+    font-weight: 500;
+}
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        color: #ffffff !important;
+    }
+
+/* ----------- BOTONES ----------- */
+.btn-primary {
+    background-color: #004a8f;
+    border-color: #004a8f;
+}
+
+    .btn-primary:hover {
+        background-color: #00386b;
+        border-color: #00386b;
+    }
+
+/* ----------- TARJETAS ----------- */
+.card {
+    border-radius: 12px;
+}
+
+/* ----------- LOGIN Y PANEL ----------- */
+.card-body {
+    padding: 2rem;
+}
+
+/* ----------- LINKS PIE DE PÁGINA ----------- */
+.footer {
+    background-color: #f1f1f1;
+    color: #555;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+/* ----------- IMAGENES RESPONSIVE ----------- */
+.img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

@@ -2,11 +2,12 @@
 @inject SignInManager<IdentityUser> SignInManager
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MiTiendaDescuentos.Web</title>
+    <title>@ViewData["Title"] - MEP - Matrículas y Educación Pública</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MiTiendaDescuentos.Web.styles.css" asp-append-version="true" />
@@ -18,11 +19,19 @@
             var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
         }
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+        <!-- NAVBAR MEP -->
+        <nav class="navbar navbar-expand-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <!-- Marca / título de la app -->
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    MiTiendaDescuentos.Web
+
+                <!-- Marca / título MEP -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="logo-mep">MEP</span>
+                    <span>
+                        MEP - Matrículas y Educación Pública
+                        <span class="navbar-subtitle">
+                            Sistema de agendamiento para tutores y padres de familia
+                        </span>
+                    </span>
                 </a>
 
                 <!-- Botón hamburguesa en pantallas pequeñas -->
@@ -87,7 +96,7 @@
                         }
                     </ul>
 
-                    <!-- Menú derecha (login) -->
+                    <!-- Menú derecha (login / usuario) -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <partial name="_LoginPartial" />
@@ -106,7 +115,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - MiTiendaDescuentos.Web -
+            &copy; 2025 - MEP - Matrículas y Educación Pública -
             <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTiendaDescuentos.Web.Data;
@@ -16,10 +17,14 @@ namespace MiTiendaDescuentos.Web.Controllers
         }
 
         // GET: Instituciones
+        // Solo muestra instituciones ACTIVAS
         public async Task<IActionResult> Index()
         {
-            var lista = await _context.Instituciones.ToListAsync();
-            return View(lista);
+            var institucionesActivas = await _context.Instituciones
+                .Where(i => i.Estado == "Activo")
+                .ToListAsync();
+
+            return View(institucionesActivas);
         }
 
         // GET: Instituciones/Details/5
@@ -46,13 +51,34 @@ namespace MiTiendaDescuentos.Web.Controllers
         // POST: Instituciones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdColegio,Nombre,Localidad,DireccionPrincipal,Correo,Telefono,CantidadSedes")] Institucion institucion)
+        public async Task<IActionResult> Create(Institucion institucion)
         {
+            // 1. Validaciones de DataAnnotations
             if (!ModelState.IsValid)
+            {
                 return View(institucion);
+            }
 
-            _context.Add(institucion);
+            // 2. Validar que el IdColegio NO exista ya
+            var idExiste = await _context.Instituciones
+                .AnyAsync(i => i.IdColegio == institucion.IdColegio);
+
+            if (idExiste)
+            {
+                ModelState.AddModelError(
+                    nameof(institucion.IdColegio),
+                    "El código de institución ya existe. Por favor ingrese uno diferente."
+                );
+
+                return View(institucion);
+            }
+
+            // 3. Crear siempre como ACTIVO
+            institucion.Estado = "Activo";
+
+            _context.Instituciones.Add(institucion);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -72,22 +98,36 @@ namespace MiTiendaDescuentos.Web.Controllers
         // POST: Instituciones/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdColegio,Nombre,Localidad,DireccionPrincipal,Correo,Telefono,CantidadSedes")] Institucion institucion)
+        public async Task<IActionResult> Edit(long id, Institucion institucion)
         {
             if (id != institucion.IdColegio)
                 return NotFound();
 
             if (!ModelState.IsValid)
+            {
                 return View(institucion);
+            }
+
+            // Cargar la entidad real desde la BD
+            var institucionDb = await _context.Instituciones.FindAsync(id);
+            if (institucionDb == null)
+                return NotFound();
+
+            // Actualizar SOLO los campos editables (no Estado)
+            institucionDb.Nombre = institucion.Nombre;
+            institucionDb.Localidad = institucion.Localidad;
+            institucionDb.DireccionPrincipal = institucion.DireccionPrincipal;
+            institucionDb.Correo = institucion.Correo;
+            institucionDb.Telefono = institucion.Telefono;
+            institucionDb.CantidadSedes = institucion.CantidadSedes;
 
             try
             {
-                _context.Update(institucion);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!InstitucionExists(institucion.IdColegio))
+                if (!InstitucionExists(id))
                     return NotFound();
                 else
                     throw;
@@ -111,7 +151,7 @@ namespace MiTiendaDescuentos.Web.Controllers
             return View(institucion);
         }
 
-        // POST: Instituciones/Delete/5
+        // POST: Instituciones/Delete/5  (BORRADO LÓGICO)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
@@ -120,22 +160,10 @@ namespace MiTiendaDescuentos.Web.Controllers
             if (institucion == null)
                 return NotFound();
 
-            // <<< AQUÍ está la clave: revisar si tiene sedes asociadas >>>
-            // Ojo: en tu ApplicationDbContext la DbSet se llama "Sede"
-            bool tieneSedes = await _context.Sede
-                .AnyAsync(s => s.IdColegio == id);
+            // Borrado lógico: solo cambiar estado
+            institucion.Estado = "Inactivo";
+            _context.Update(institucion);
 
-            if (tieneSedes)
-            {
-                ModelState.AddModelError(string.Empty,
-                    "No se puede eliminar la institución porque tiene sedes asociadas. " +
-                    "Elimina primero las sedes relacionadas.");
-
-                // Volvemos a mostrar la vista Delete con el mensaje de error
-                return View("Delete", institucion);
-            }
-
-            _context.Instituciones.Remove(institucion);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

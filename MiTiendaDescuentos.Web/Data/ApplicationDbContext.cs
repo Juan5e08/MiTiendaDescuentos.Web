@@ -11,11 +11,11 @@ namespace MiTiendaDescuentos.Web.Data
         {
         }
 
-        // DbSets para las tablas de la BD "colegios"
+        
         public DbSet<Cita> Cita { get; set; }
         public DbSet<Cupo> Cupo { get; set; }
         public DbSet<Grado> Grado { get; set; }
-        public DbSet<Institucion> Instituciones { get; set; }   // <- IMPORTANTE
+        public DbSet<Institucion> Instituciones { get; set; }
         public DbSet<Sede> Sede { get; set; }
     }
 }
